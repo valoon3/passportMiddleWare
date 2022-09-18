@@ -12,15 +12,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(session({
     secret: 'secret',
     resave: false, // 변환 내용이 없더라도 다시 저장할 것인가
-    saveUninitialized: true, // 저장할 내용이 없더라도 세션을 생성할 것인인가
+    saveUninitialized: false, // 저장할 내용이 없더라도 세션을 생성할 것인인가
     cookies: {
         httpOnly: true,
         secure: false,
     },
     name: 'session-cookies',
 }))
-// app.use(passport.initialize()); // 미들웨어는 req 객체에 passport 설정을 심고
-// app.use(passport.session); // req.session 객체에 passport 정보를 저장한다.
+app.use(passport.initialize()); // 미들웨어는 req 객체에 passport 설정을 심고
+app.use(passport.session()); // req.session 객체에 passport 정보를 저장한다.
 app.use(auth);
 
 app.get('/', (req, res) => {
